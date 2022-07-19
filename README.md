@@ -25,14 +25,14 @@ project/
 @import "../node_modules/fluid/scss";
 
 $fluid-settings: (
-	minViewportWidth: 320,
-	minFontSize: 21,
-	minTypeScale: minorThird,
-	maxViewportWidth: 880,
-	maxFontSize: 24,
-	maxTypeScale: majorThird,
-	positiveSteps: 5,
-	negativeSteps: 2,
+  minViewportWidth: 320,
+  minFontSize: 21,
+  minTypeScale: minorThird,
+  maxViewportWidth: 880,
+  maxFontSize: 24,
+  maxTypeScale: majorThird,
+  positiveSteps: 5,
+  negativeSteps: 2,
 );
 
 @include  ft-generate-classes($fluid-settings);
@@ -44,26 +44,6 @@ If you're using Webpack, you can simplify the `@import` using the `~` prefix:
 @import "~fluid/scss";
 ```
 
-#### Setup
-
-```scss
-// scss/main.scss
-
-@import "../node_modules/fluid/scss";
-
-$fluid-settings: (
-	minViewportWidth: 320,
-	minFontSize: 21,
-	minTypeScale: minorThird,
-	maxViewportWidth: 880,
-	maxFontSize: 24,
-	maxTypeScale: majorThird,
-	positiveSteps: 5,
-	negativeSteps: 2,
-);
-
-@include  ft-generate-classes($fluid-settings);
-```
 #### Generating classes
 Fluid automatically generates classes for you. They can be used in the following way:
 
