@@ -11,7 +11,7 @@ Add fluid settings into your desired file. We recommend using a _variables.scss 
 ```text
 project/
 ├── node_modules/
-│   └── rfs
+│   └── fluid
 │        └── ...
 └── scss/
     └── main.scss
