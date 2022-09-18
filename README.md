@@ -47,9 +47,9 @@ Liquid type automatically generates classes for you. They can be used in the fol
 ```scss
 // scss/main.scss
 
-@include  ft-generate-classes($fluid-settings);
+@include liquid-type-generate-classes($liquid-type-settings);
 
-// Outputs classes based on the $fluid-settings params. 
+// Outputs classes based on the $liquid-type-settings params. 
 // By default, it outputs 8 classes to create a complete typographical octave: 
 // .lt--2,
 // .lt--1,
