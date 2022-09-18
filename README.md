@@ -13,7 +13,7 @@ Add liquid settings into your desired file. I recommend using a _variables.scss 
 
 @import "liquid-type.scss";
 
-$base-fluid-settings: (
+$liquid-type-settings: (
   baseFontSize: 16px,
   minViewportWidth: 320px,
   minFontSize: 21px,
