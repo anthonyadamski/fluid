@@ -1,0 +1,94 @@
+$liquid-type-settings: () !default;
+$liquid-type-settings: map-merge(
+	(
+		baseFontSize: 16px,
+		minViewportWidth: 320px,
+		minFontSize: 21px,
+		minTypeScale: minorThird,
+		maxViewportWidth: 1140px,
+		maxFontSize: 24px,
+		maxTypeScale: majorThird,
+		singleStep: null,
+		negativeSteps: 3,
+		positiveSteps: 4,
+	),
+	$liquid-type-settings
+);
+
+$type-scales: (
+	minorSecond: 1.067,
+	majorSecond: 1.125,
+	minorThird: 1.2,
+	majorThird: 1.25,
+	perfectFourth: 1.333,
+	augmentedFourth: 1.414,
+	perfectFifth: 1.5,
+	minorSixth: 1.6,
+	goldenRatio: 1.618,
+	majorSixth: 1.667,
+	minorSeventh: 1.778,
+	majorSeventh: 1.875,
+	octave: 2,
+	majorTenth: 2.5,
+	majorEleventh: 2.667,
+	majorTwelfth: 3,
+	doubleOctave: 4
+);
+
+@mixin liquid-type-class-constructor($params) {
+	$baseFontSize: map-get($params, baseFontSize);
+	$minFontSize: map-get($params, minFontSize);
+	$maxFontSize: map-get($params, maxFontSize);
+	$minViewportWidth: map-get($params, minViewportWidth);
+	$maxViewportWidth: map-get($params, maxViewportWidth);
+	$minTypeScale: map-get($params, minTypeScale);
+	$maxTypeScale: map-get($params, maxTypeScale);
+	$multiplier: map-get($params, multiplier);
+
+	$lookupMinScale: map-get($type-scales, $minTypeScale);
+	$lookupMaxScale: map-get($type-scales, $maxTypeScale);
+	$minTypeScale: if($lookupMinScale != null, $lookupMinScale, $minTypeScale);
+	$maxTypeScale: if($lookupMaxScale != null, $lookupMaxScale, $maxTypeScale);
+	
+	$minFontSize: $minFontSize / $baseFontSize * math-exponent($minTypeScale, $multiplier);
+	$maxFontSize: $maxFontSize / $baseFontSize * math-exponent($maxTypeScale, $multiplier);
+
+	$maxViewportWidth: $maxViewportWidth / $baseFontSize;
+	$minViewportWidth: $minViewportWidth / $baseFontSize;
+
+	$slope: ($maxFontSize - $minFontSize) / ($maxViewportWidth - $minViewportWidth);
+	$yAxisIntersection: -$minViewportWidth * $slope + $minFontSize;
+	$preferredValue: calc(#{strip-unit($yAxisIntersection) * 1rem} + #{strip-unit($slope) * 100vw});
+
+	$minFontSize: strip-unit($minFontSize) * 1rem;
+	$maxFontSize: strip-unit($maxFontSize) * 1rem;
+
+	font-size: clamp(#{$minFontSize}, #{$preferredValue}, #{$maxFontSize});
+}
+
+@mixin liquid-type-generate-classes($params) {
+	$negativeSteps: map-get($params, negativeSteps);
+	$positiveSteps: map-get($params, positiveSteps);
+	@if ($negativeSteps) {
+		@for $i from ($negativeSteps * -1) to 0 {
+			.lt-#{$i} {
+				@include liquid-type-class-constructor(
+					map-merge($params, (multiplier: $i))
+				);
+			}
+		}
+	} @else {
+		@error 'negativeSteps is null.';
+	}
+	@if ($positiveSteps) {
+		@for $i from 0 through ($positiveSteps + 1) {
+			.lt-#{$i} {
+				@include liquid-type-class-constructor(
+					map-merge($params, (multiplier: $i))
+				);
+			}
+		}
+	} @else {
+		@error 'postiveSteps is null.';
+	}
+}
