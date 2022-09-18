@@ -1,51 +1,48 @@
-# Fluid SASS Library
+# Liquid Type SASS Plugin
 
-Fluid is a SCSS mixin library based on brilliant work from the individuals at  [utopia.fyi](https://utopia.fyi/)
+Liquid is a SCSS mixin library based on brilliant work from the individuals at [utopia.fyi](https://utopia.fyi/)
 
-Add fluid settings into your desired file. We recommend using a _variables.scss file for this.
+Add liquid settings into your desired file. I recommend using a _variables.scss file for this.
 
 ## Usage
-
-### Sass (<code>.scss</code> syntax)
-
-```text
-project/
-├── node_modules/
-│   └── fluid
-│        └── ...
-└── scss/
-    └── main.scss
-```
 
 #### Setup
 
 ```scss
-// scss/main.scss
+// scss/app.scss
 
-@import "../node_modules/fluid/scss";
+@import "liquid-type.scss";
 
-$fluid-settings: (
-  minViewportWidth: 320,
-  minFontSize: 21,
+$base-fluid-settings: (
+  baseFontSize: 16px,
+  minViewportWidth: 320px,
+  minFontSize: 21px,
   minTypeScale: minorThird,
-  maxViewportWidth: 880,
-  maxFontSize: 24,
+  maxViewportWidth: 1140px,
+  maxFontSize: 24px,
   maxTypeScale: majorThird,
-  positiveSteps: 5,
-  negativeSteps: 2,
+  singleStep: null,
+  negativeSteps: 3,
+  positiveSteps: 4,
 );
 
-@include  ft-generate-classes($fluid-settings);
-```
+@include liquid-type-generate-classes($liquid-type-settings);
 
-If you're using Webpack, you can simplify the `@import` using the `~` prefix:
+h1 { @extend .lt-4; }
+h2 { @extend .lt-3; }
+h3 { @extend .lt-2; }
+h4 { @extend .lt-1; }
+h5 { @extend .lt-0; }
+p { @extend .lt-0; }
+h6 { @extend .lt--1; }
+small { @extend .lt--2; }
 
-```scss
-@import "~fluid/scss";
+// You can also use these directly in your markup. For example:
+// <h1 class="lt-4">Hello</h1>
 ```
 
 #### Generating classes
-Fluid automatically generates classes for you. They can be used in the following way:
+Liquid type automatically generates classes for you. They can be used in the following way:
 
 ```scss
 // scss/main.scss
@@ -53,13 +50,13 @@ Fluid automatically generates classes for you. They can be used in the following
 @include  ft-generate-classes($fluid-settings);
 
 // Outputs classes based on the $fluid-settings params. 
-// By default, it outputs 8 classes: 
-// .fluid-step--2,
-// .fluid-step--1,
-// .fluid-step-0,
-// .fluid-step-1,
-// .fluid-step-2,
-// .fluid-step-3,
-// .fluid-step-4,
-// .fluid-step-5,
+// By default, it outputs 8 classes to create a complete typographical octave: 
+// .lt--2,
+// .lt--1,
+// .lt-0,
+// .lt-1,
+// .lt-2,
+// .lt-3,
+// .lt-4,
+// .lt-5,
 ```
