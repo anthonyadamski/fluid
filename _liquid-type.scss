@@ -1,27 +1,27 @@
 @function strip-unit($number) {
-	@if type-of($number) == "number" and not unitless($number) {
-		@return $number / ($number * 0 + 1);
-	}
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
 
-	@return $number;
+  @return $number;
 }
 
 @function math-exponent($number, $exponent: 1) {
-	$value: 1;
-	@if (round($exponent) != $exponent) {
-		@return exp($exponent * ln($number));
-	}
-	@if $exponent > 0 {
-		@for $i from 1 through $exponent {
-			$value: $value * $number;
-		}
-	} @else if $exponent < 0 {
-		@for $i from 1 through -$exponent {
-			$value: $value / $number;
-		}
-	}
-
-	@return $value;
+ $value: 1;
+ @if (round($exponent) != $exponent) {
+  @return exp($exponent * ln($number));
+ }
+ @if $exponent > 0 {
+  @for $i from 1 through $exponent {
+   $value: $value * $number;
+  }
+ } @else if $exponent < 0 {
+  @for $i from 1 through -$exponent {
+   $value: $value / $number;
+  }
+ }
+	
+ @return $value;
 }
 
 $liquid-type-settings: () !default;
